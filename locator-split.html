@@ -19,7 +19,7 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; }
+        body { background-color: var(--bg-color); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
         .mapboxgl-ctrl-logo, .mapboxgl-ctrl-attrib { display: none !important; }
 
@@ -32,14 +32,14 @@
         .logo-img { max-height: 40px; }
 
         .hero { 
-            padding: 30px 10px; 
+            padding: 25px 10px; 
             text-align: center; 
             background: white; 
             border-bottom: 1px solid #eee;
             z-index: 100; 
         }
-        .hero h1 { font-size: 2rem; margin-bottom: 5px; color: var(--primary-red); font-weight: 800; }
-        .hero p { margin-bottom: 20px; font-size: 1.1rem; color: #666; }
+        .hero h1 { font-size: 1.8rem; margin-bottom: 5px; color: var(--primary-red); font-weight: 800; }
+        .hero p { margin-bottom: 15px; font-size: 1rem; color: #666; }
 
         .search-form { max-width: 600px; margin: 0 auto; display: flex; gap: 10px; align-items: flex-end; text-align: left; }
         .search-input-group { flex: 1; }
@@ -66,16 +66,16 @@
         }
         .search-btn:hover { background-color: #a8181e; }
 
-        /* Split Screen Container - HIDDEN BY DEFAULT */
+        /* Split Screen Container - Hidden initially */
         #resultsContainer { 
-            display: none; /* Changed from previous version to ensure it stays hidden */
+            display: none; 
             flex: 1; 
             overflow: hidden; 
             flex-direction: row; 
         }
 
         .sidebar {
-            width: 400px;
+            width: 380px;
             height: 100%;
             overflow-y: auto;
             padding: 20px;
@@ -88,29 +88,28 @@
         .store-card {
             background: var(--card-bg); border-radius: 10px; padding: 18px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 5px solid var(--primary-red);
-            transition: transform 0.2s;
         }
-        .store-card:hover { transform: translateX(5px); }
         .store-card.closest { border-left-color: var(--primary-green); background-color: #f0fdf4; }
         
         .store-header { display: flex; justify-content: space-between; align-items: flex-start; }
         .store-name { font-size: 1.1rem; font-weight: bold; color: var(--text-main); }
         
-        .card-locate-btn { color: var(--primary-red); cursor: pointer; background: none; border: none; }
+        .card-locate-btn { color: var(--primary-red); cursor: pointer; background: none; border: none; padding: 2px; }
 
-        .distance-tag { font-weight: bold; color: var(--primary-green); font-size: 0.9rem; margin: 8px 0; }
+        .distance-tag { font-weight: bold; color: var(--primary-green); font-size: 0.85rem; margin: 8px 0; }
         
         .actions { display: flex; gap: 8px; margin-top: 12px; }
         .btn { flex: 1; text-align: center; padding: 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.8rem; }
         .btn-order { background: var(--primary-red); color: white; }
         .btn-directions { background: #e2e8f0; color: var(--text-main); }
 
-        #map { flex: 1; height: 100%; }
+        #map { flex: 1; height: 100%; background: #ddd; }
 
         @media (max-width: 850px) {
-            #resultsContainer { flex-direction: column-reverse; }
+            body { overflow: auto; height: auto; }
+            #resultsContainer { flex-direction: column-reverse; height: 800px; }
             .sidebar { width: 100%; height: 50%; }
-            #map { height: 50%; width: 100%; }
+            #map { height: 400px; width: 100%; flex: none; }
             .search-form { flex-direction: column; align-items: stretch; }
         }
     </style>
@@ -123,18 +122,18 @@
 
     <section class="hero">
         <h1>Legendary Pizza Nearby</h1>
-        <p>Enter your city to find the closest Abby's.</p>
+        <p>Find the closest Abby's to your location.</p>
         
         <div class="search-form">
             <div class="search-input-group">
-                <label class="input-label">Search by City</label>
+                <label class="input-label">City or Zip Code</label>
                 <div class="search-box-wrapper">
                     <mapbox-search-box 
                         id="search-box" 
                         access-token="pk.eyJ1IjoibWF0dGNoYXBwZWwiLCJhIjoiY21ucGl4eG02MTh5bTJwcHM1cjVmMmRiNCJ9.LTABZYuUMytsPpfH5N7Rrg" 
-                        placeholder="e.g. Eugene, OR" 
+                        placeholder="Search city or zip..." 
                         proximity="-121.5, 44.0"
-                        types="place">
+                        types="place,postcode">
                     </mapbox-search-box>
                     <div class="inner-gps-btn" id="gpsBtn" title="Use My Location">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21 3L3 10.53v.98l7.58 2.73 2.73 7.58h.98L21 3z"/></svg>
@@ -163,4 +162,146 @@
             { name: "Coos Bay", address: "997 S 1st St, Coos Bay, OR 97420", phone: "(541) 267-5839", lat: 43.3665, lng: -124.2154, orderUrl: "https://coosbay.abbys.com" },
             { name: "Dallas", address: "174 W Ellendale Ave, Dallas, OR 97338", phone: "(503) 623-2222", lat: 44.9221, lng: -123.3182, orderUrl: "https://dallas.abbys.com" },
             { name: "Eagle Point", address: "11200 Oregon 62, Eagle Point, OR 97524", phone: "(541) 826-7007", lat: 42.4721, lng: -122.8021, orderUrl: "https://eaglepoint.abbys.com" },
-            { name: "Eugene - Echo Hollow Rd", address: "1976 Echo Hollow Rd, Eugene, OR 97402",
+            { name: "Eugene - Echo Hollow Rd", address: "1976 Echo Hollow Rd, Eugene, OR 97402", phone: "(541) 689-2229", lat: 44.0691, lng: -123.1672, orderUrl: "https://echohollow.abbys.com" },
+            { name: "Eugene - River Rd", address: "1970 River Rd, Eugene, OR 97404", phone: "(541) 689-0091", lat: 44.0864, lng: -123.1251, orderUrl: "https://riverroad.abbys.com" },
+            { name: "Florence", address: "1374 Hwy 101, Florence, OR 97439", phone: "(541) 997-6608", lat: 43.9723, lng: -124.1001, orderUrl: "https://florence.abbys.com" },
+            { name: "Grants Pass - Beacon Drive", address: "205 NE Beacon Dr, Grants Pass, OR 97526", phone: "(541) 476-2133", lat: 42.4501, lng: -123.3142, orderUrl: "https://beacon.abbys.com" },
+            { name: "Grants Pass - Williams Highway", address: "1560 Williams Hwy, Grants Pass, OR 97527", phone: "(541) 479-9695", lat: 42.4201, lng: -123.3361, orderUrl: "https://williams.abbys.com" },
+            { name: "Gresham", address: "21255 SE Stark St, Gresham, OR 97030", phone: "(503) 465-6600", lat: 45.5192, lng: -122.4431, orderUrl: "https://gresham.abbys.com" },
+            { name: "Junction City", address: "1425 Ivy St, Junction City, OR 97448", phone: "(541) 998-6500", lat: 44.2281, lng: -123.2042, orderUrl: "https://junctioncity.abbys.com" },
+            { name: "Keizer", address: "3451 River Rd N, Keizer, OR 97303", phone: "(503) 390-2088", lat: 44.9812, lng: -123.0321, orderUrl: "https://keizer.abbys.com" },
+            { name: "Klamath Falls - Shallock Ave", address: "2226 Shallock Ave, Klamath Falls, OR 97601", phone: "(541) 882-2177", lat: 42.2381, lng: -121.7821, orderUrl: "https://campus.abbys.com" },
+            { name: "Klamath Falls - Shasta Plaza", address: "1919 Austin St, Klamath Falls, OR 97603", phone: "(541) 884-2444", lat: 42.2081, lng: -121.7612, orderUrl: "https://shasta.abbys.com" },
+            { name: "Madras", address: "1235 U.S. 97, Madras, OR 97741", phone: "(541) 475-6363", lat: 44.6221, lng: -121.1291, orderUrl: "https://madras.abbys.com" },
+            { name: "Medford - North", address: "2550 Crater Lake Hwy, Medford, OR 97504", phone: "(541) 776-2022", lat: 42.3481, lng: -122.8631, orderUrl: "https://northmedford.abbys.com" },
+            { name: "Medford - South", address: "1080 S Riverside Ave, Medford, OR 97501", phone: "(541) 773-5568", lat: 42.3161, lng: -122.8641, orderUrl: "https://medford.abbys.com" },
+            { name: "Myrtle Creek", address: "700 S Main St, Myrtle Creek, OR 97457", phone: "(541) 863-4000", lat: 43.0181, lng: -123.2952, orderUrl: "https://myrtlecreek.abbys.com" },
+            { name: "Newberg", address: "1913 Portland Road, Newberg, OR 97132", phone: "(503) 538-3800", lat: 45.3111, lng: -122.9561, orderUrl: "https://newberg.abbys.com" },
+            { name: "Newport", address: "932 NW Coast Hwy, Newport, OR 97365", phone: "(541) 265-9336", lat: 44.6432, lng: -124.0551, orderUrl: "https://newport.abbys.com" },
+            { name: "Oregon City", address: "19011 Beavercreek Road, Oregon City, OR 97045", phone: "(503) 387-6129", lat: 45.3341, lng: -122.5801, orderUrl: "https://oregoncity.abbys.com" },
+            { name: "Pendleton", address: "828 Southgate, Pendleton, OR 97801", phone: "(541) 278-2229", lat: 45.6591, lng: -118.8021, orderUrl: "https://pendleton.abbys.com" },
+            { name: "Prineville", address: "1485 NE 3rd St, Prineville, OR 97754", phone: "(541) 903-9500", lat: 44.3031, lng: -120.8351, orderUrl: "https://prineville.abbys.com" },
+            { name: "Redmond", address: "1938 U.S. 97, Redmond, OR 97756", phone: "(541) 548-5266", lat: 44.2561, lng: -121.1732, orderUrl: "https://redmond.abbys.com" },
+            { name: "Rogue River", address: "121 Pine St, Rogue River, OR 97537", phone: "(541) 582-4203", lat: 42.4331, lng: -123.1721, orderUrl: "https://rogueriver.abbys.com" },
+            { name: "Roseburg - Diamond Lake Blvd.", address: "2585 NE Diamond Lake Blvd, Roseburg, OR 97470", phone: "(541) 672-7781", lat: 43.2181, lng: -123.3221, orderUrl: "https://diamond.abbys.com" },
+            { name: "Roseburg - Stephens Street", address: "1661 NE Stephens St, Roseburg, OR 97470", phone: "(541) 672-2646", lat: 43.2281, lng: -123.3441, orderUrl: "https://stephens.abbys.com" },
+            { name: "Springfield", address: "2053 Olympic St, Springfield, OR 97477", phone: "(541) 747-4444", lat: 44.0561, lng: -122.9861, orderUrl: "https://springfield.abbys.com" },
+            { name: "Sutherlin", address: "1011 W Central Ave, Sutherlin, OR 97479", phone: "(541) 459-9595", lat: 43.3881, lng: -123.3321, orderUrl: "https://sutherlin.abbys.com" },
+            { name: "Winston", address: "96 S.W. Douglas, Winston, OR 97496", phone: "(541) 679-6555", lat: 43.1201, lng: -123.4181, orderUrl: "https://winston.abbys.com" },
+            { name: "Woodburn", address: "1215 N Pacific Hwy, Woodburn, OR 97071", phone: "(503) 981-5494", lat: 45.1551, lng: -122.8681, orderUrl: "https://woodburn.abbys.com" },
+            { name: "East Wenatchee", address: "702 Grant Rd, East Wenatchee, WA 98802", phone: "(509) 884-7211", lat: 47.4151, lng: -120.2881, orderUrl: "https://eastwenatchee.abbys.com" },
+            { name: "Wenatchee", address: "509 N Western Ave #110, Wenatchee, WA 98801", phone: "(509) 662-2226", lat: 47.4331, lng: -120.3341, orderUrl: "https://wenatchee.abbys.com" },
+            { name: "Yakima", address: "4804 Tieton Dr, Yakima, WA 98908", phone: "(509) 966-1398", lat: 46.5961, lng: -120.5731, orderUrl: "https://yakima.abbys.com" }
+        ];
+
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v12',
+            center: [-121.5, 44.0],
+            zoom: 6,
+            attributionControl: false
+        });
+
+        const markers = [];
+        let lastResult = null;
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 3958.8;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        }
+
+        function centerMapOnStore(lng, lat) {
+            map.flyTo({ center: [lng, lat], zoom: 14, speed: 1.5 });
+        }
+
+        function renderStores(dataToRender, closestName) {
+            const grid = document.getElementById('storeGrid');
+            grid.innerHTML = '';
+            markers.forEach(m => m.remove());
+            markers.length = 0;
+            
+            dataToRender.forEach(store => {
+                const isClosest = store.name === closestName;
+                const popupHTML = `<div style="text-align:center; padding:5px;"><strong>${store.name}</strong><br><small>${store.address}</small><br><br><a href="${store.orderUrl}" target="_blank" style="background:#d12027; color:white; padding:5px 10px; text-decoration:none; border-radius:4px; font-weight:bold;">Order</a></div>`;
+
+                const marker = new mapboxgl.Marker({ color: isClosest ? '#00703c' : '#d12027' })
+                    .setLngLat([store.lng, store.lat])
+                    .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(popupHTML))
+                    .addTo(map);
+                markers.push(marker);
+
+                const card = document.createElement('div');
+                card.className = `store-card ${isClosest ? 'closest' : ''}`;
+                
+                // Fixed the directions URL syntax error here
+                const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(store.address)}`;
+                
+                card.innerHTML = `
+                    <div class="store-header">
+                        <h2 class="store-name">${store.name}</h2>
+                        <button class="card-locate-btn" onclick="centerMapOnStore(${store.lng}, ${store.lat})" title="Find on Map">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        </button>
+                    </div>
+                    <p style="color:#666; font-size:0.8rem; margin-top:4px;">${store.address}</p>
+                    <p class="distance-tag">${store.distance.toFixed(1)} miles away</p>
+                    <div class="actions">
+                        <a href="${store.orderUrl}" target="_blank" class="btn btn-order">Order Now</a>
+                        <a href="${directionsUrl}" target="_blank" class="btn btn-directions">Directions</a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function revealResults(lat, lng) {
+            const container = document.getElementById('resultsContainer');
+            container.style.display = 'flex';
+            
+            // Recalculate map size now that container is visible
+            setTimeout(() => { map.resize(); }, 50);
+
+            const sorted = stores.map(s => ({ 
+                ...s, 
+                distance: calculateDistance(lat, lng, s.lat, s.lng) 
+            })).sort((a, b) => a.distance - b.distance);
+
+            renderStores(sorted, sorted[0].name);
+            map.flyTo({ center: [lng, lat], zoom: 10 });
+        }
+
+        // Search box selection event
+        document.getElementById('search-box').addEventListener('retrieve', (e) => {
+            const feat = e.detail.features[0];
+            if (feat) {
+                const [lng, lat] = feat.geometry.coordinates;
+                lastResult = { lat, lng };
+                revealResults(lat, lng);
+            }
+        });
+
+        // Search button click
+        document.getElementById('searchBtn').addEventListener('click', () => {
+            if (lastResult) {
+                revealResults(lastResult.lat, lastResult.lng);
+            } else {
+                alert("Please type a location and select one of the suggestions from the list.");
+            }
+        });
+
+        // GPS button click
+        document.getElementById('gpsBtn').addEventListener('click', () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(pos => {
+                    revealResults(pos.coords.latitude, pos.coords.longitude);
+                }, () => alert("GPS access denied. Please type your city instead."));
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
+        });
+    </script>
+</body>
+</html>
