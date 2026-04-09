@@ -155,15 +155,20 @@
         const ACCESS_TOKEN = 'pk.eyJ1IjoibWF0dGNoYXBwZWwiLCJhIjoiY21ucGl4eG02MTh5bTJwcHM1cjVmMmRiNCJ9.LTABZYuUMytsPpfH5N7Rrg';
         mapboxgl.accessToken = ACCESS_TOKEN;
 
-        const stores = [
-            { name: "Albany", address: "3033 Santiam Hwy SE, Albany, OR 97322", phone: "(541) 928-9311", lat: 44.6263, lng: -123.0645, orderUrl: "https://albany.abbys.com" },
-            { name: "Bend", address: "1115 NE 3rd St, Bend, OR 97701", phone: "(541) 382-7372", lat: 44.0652, lng: -121.3056, orderUrl: "https://bend.abbys.com" },
+
+const stores = [
+    { name: "Albany", address: "3033 Santiam Hwy SE, Albany, OR 97322", phone: "(541) 928-9311", lat: 44.6263001, lng: -123.0645123, orderUrl: "https://albany.abbys.com" },
+    { name: "Bend", address: "1115 NE 3rd St, Bend, OR 97701", phone: "(541) 382-7372", lat: 44.0612192, lng: -121.3030636, orderUrl: "https://bend.abbys.com" },
+
+    { name: "Oregon City", address: "19011 Beavercreek Road, Oregon City, OR 97045", phone: "(503) 387-6129", lat: 45.3306999, lng: -122.5719986, orderUrl: "https://oregoncity.abbys.com" },
+    { name: "Redmond", address: "1938 U.S. 97, Redmond, OR 97756", phone: "(541) 548-5266", lat: 44.2703018, lng: -121.1760025, orderUrl: "https://redmond.abbys.com" },
+
             { name: "Central Point", address: "825 E Pine St, Central Point, OR 97502", phone: "(541) 664-1124", lat: 42.3761, lng: -122.9103, orderUrl: "https://centralpoint.abbys.com" },
             { name: "Coos Bay", address: "997 S 1st St, Coos Bay, OR 97420", phone: "(541) 267-5839", lat: 43.3665, lng: -124.2154, orderUrl: "https://coosbay.abbys.com" },
-            { name: "Dallas", address: "174 W Ellendale Ave, Dallas, OR 97338", phone: "(503) 623-2222", lat: 44.9221, lng: -123.3182, orderUrl: "https://dallas.abbys.com" },
+    { name: "Dallas", address: "174 W Ellendale Ave, Dallas, OR 97338", phone: "(503) 623-2222", lat: 44.9294501, lng: -123.3144870, orderUrl: "https://dallas.abbys.com" },
             { name: "Eagle Point", address: "11200 Oregon 62, Eagle Point, OR 97524", phone: "(541) 826-7007", lat: 42.4721, lng: -122.8021, orderUrl: "https://eaglepoint.abbys.com" },
-            { name: "Eugene - Echo Hollow Rd", address: "1976 Echo Hollow Rd, Eugene, OR 97402", phone: "(541) 689-2229", lat: 44.0691, lng: -123.1672, orderUrl: "https://echohollow.abbys.com" },
-            { name: "Eugene - River Rd", address: "1970 River Rd, Eugene, OR 97404", phone: "(541) 689-0091", lat: 44.0864, lng: -123.1251, orderUrl: "https://riverroad.abbys.com" },
+    { name: "Eugene - Echo Hollow Rd", address: "1976 Echo Hollow Rd, Eugene, OR 97402", phone: "(541) 689-2229", lat: 44.0832151, lng: -123.1706115, orderUrl: "https://echohollow.abbys.com" },
+    { name: "Eugene - River Rd", address: "1970 River Rd, Eugene, OR 97404", phone: "(541) 689-0091", lat: 44.0937004, lng: -123.1299973, orderUrl: "https://riverroad.abbys.com" },
             { name: "Florence", address: "1374 Hwy 101, Florence, OR 97439", phone: "(541) 997-6608", lat: 43.9723, lng: -124.1001, orderUrl: "https://florence.abbys.com" },
             { name: "Grants Pass - Beacon Drive", address: "205 NE Beacon Dr, Grants Pass, OR 97526", phone: "(541) 476-2133", lat: 42.4501, lng: -123.3142, orderUrl: "https://beacon.abbys.com" },
             { name: "Grants Pass - Williams Highway", address: "1560 Williams Hwy, Grants Pass, OR 97527", phone: "(541) 479-9695", lat: 42.4201, lng: -123.3361, orderUrl: "https://williams.abbys.com" },
@@ -178,10 +183,10 @@
             { name: "Myrtle Creek", address: "700 S Main St, Myrtle Creek, OR 97457", phone: "(541) 863-4000", lat: 43.0181, lng: -123.2952, orderUrl: "https://myrtlecreek.abbys.com" },
             { name: "Newberg", address: "1913 Portland Road, Newberg, OR 97132", phone: "(503) 538-3800", lat: 45.3111, lng: -122.9561, orderUrl: "https://newberg.abbys.com" },
             { name: "Newport", address: "932 NW Coast Hwy, Newport, OR 97365", phone: "(541) 265-9336", lat: 44.6432, lng: -124.0551, orderUrl: "https://newport.abbys.com" },
-            { name: "Oregon City", address: "19011 Beavercreek Road, Oregon City, OR 97045", phone: "(503) 387-6129", lat: 45.3341, lng: -122.5801, orderUrl: "https://oregoncity.abbys.com" },
+    { name: "Oregon City", address: "19011 Beavercreek Road, Oregon City, OR 97045", phone: "(503) 387-6129", lat: 45.3306999, lng: -122.5719986, orderUrl: "https://oregoncity.abbys.com" },
             { name: "Pendleton", address: "828 Southgate, Pendleton, OR 97801", phone: "(541) 278-2229", lat: 45.6591, lng: -118.8021, orderUrl: "https://pendleton.abbys.com" },
             { name: "Prineville", address: "1485 NE 3rd St, Prineville, OR 97754", phone: "(541) 903-9500", lat: 44.3031, lng: -120.8351, orderUrl: "https://prineville.abbys.com" },
-            { name: "Redmond", address: "1938 U.S. 97, Redmond, OR 97756", phone: "(541) 548-5266", lat: 44.2561, lng: -121.1732, orderUrl: "https://redmond.abbys.com" },
+    { name: "Redmond", address: "1938 U.S. 97, Redmond, OR 97756", phone: "(541) 548-5266", lat: 44.2703018, lng: -121.1760025, orderUrl: "https://redmond.abbys.com" },
             { name: "Rogue River", address: "121 Pine St, Rogue River, OR 97537", phone: "(541) 582-4203", lat: 42.4331, lng: -123.1721, orderUrl: "https://rogueriver.abbys.com" },
             { name: "Roseburg - Diamond Lake Blvd.", address: "2585 NE Diamond Lake Blvd, Roseburg, OR 97470", phone: "(541) 672-7781", lat: 43.2181, lng: -123.3221, orderUrl: "https://diamond.abbys.com" },
             { name: "Roseburg - Stephens Street", address: "1661 NE Stephens St, Roseburg, OR 97470", phone: "(541) 672-2646", lat: 43.2281, lng: -123.3441, orderUrl: "https://stephens.abbys.com" },
@@ -192,6 +197,9 @@
             { name: "East Wenatchee", address: "702 Grant Rd, East Wenatchee, WA 98802", phone: "(509) 884-7211", lat: 47.4151, lng: -120.2881, orderUrl: "https://eastwenatchee.abbys.com" },
             { name: "Wenatchee", address: "509 N Western Ave #110, Wenatchee, WA 98801", phone: "(509) 662-2226", lat: 47.4331, lng: -120.3341, orderUrl: "https://wenatchee.abbys.com" },
             { name: "Yakima", address: "4804 Tieton Dr, Yakima, WA 98908", phone: "(509) 966-1398", lat: 46.5961, lng: -120.5731, orderUrl: "https://yakima.abbys.com" }
+            
+            
+            
         ];
 
         const map = new mapboxgl.Map({
