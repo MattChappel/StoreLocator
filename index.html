@@ -8,6 +8,7 @@
         :root {
             --primary-red: #d12027;
             --primary-green: #00703c;
+            --primary-slate: #434a54; /* New color for Split View */
             --bg-color: #f8f9fa;
             --card-bg: #ffffff;
             --text-main: #333333;
@@ -83,6 +84,10 @@
             box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
 
+        .btn-split {
+            background-color: var(--primary-slate);
+        }
+
         .btn-map {
             background-color: var(--primary-green);
         }
@@ -109,14 +114,22 @@
         <p>Select a version below to test the new mobile-first, zero-API-cost store locator experience.</p>
         
         <div class="btn-container">
-            <a href="locator-map.html" class="btn btn-list">
-                Version 1: Visual Map
+            <a href="locator-split.html" class="btn btn-split">
+                Version 1: Split Screen
+                <div class="features">Side-by-side list & map, city/zip search</div>
+            </a>
+
+            <a href="locator-map.html" class="btn btn-map">
+                Version 2: Visual Map
                 <div class="features">Interactive pins, GPS routing, list view</div>
             </a>
             
-            <a href="locator-list.html" class="btn btn-list">
-                Version 2: Clean List
-                <div class="features">Lightning fast, GPS routing, simple
+            <a href="Locator-list.html" class="btn btn-list">
+                Version 3: Clean List
+                <div class="features">Lightning fast, GPS routing, simple view</div>
+            </a>
+        </div>
+    </div>
 
-
-
+</body>
+</html>
