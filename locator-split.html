@@ -45,7 +45,9 @@
         .search-input-group { flex: 1; }
         .input-label { font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; display: block; color: #555; }
 
-        .search-box-wrapper { position: relative; }
+        .search-box-wrapper { position: relative; border-radius: 8px; transition: box-shadow 0.2s; }
+        .search-box-wrapper:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.15); }
+        .search-box-wrapper:focus-within { box-shadow: 0 4px 18px rgba(0,0,0,0.22); }
         
         mapbox-search-box {
             display: block; width: 100%;
@@ -62,9 +64,9 @@
         .search-btn {
             background-color: var(--primary-red); color: white; border: none;
             padding: 0 25px; height: 45px; border-radius: 8px; font-size: 0.9rem; font-weight: bold;
-            text-transform: uppercase; cursor: pointer; transition: background 0.2s;
+            text-transform: uppercase; cursor: pointer; transition: background 0.2s, box-shadow 0.2s;
         }
-        .search-btn:hover { background-color: #a8181e; }
+        .search-btn:hover { background-color: #a8181e; box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
 
         #resultsContainer { 
             display: none; 
@@ -93,7 +95,8 @@
         .store-header { display: flex; justify-content: space-between; align-items: flex-start; }
         .store-name { font-size: 1.1rem; font-weight: bold; color: var(--text-main); }
         
-        .card-locate-btn { color: var(--primary-red); cursor: pointer; background: none; border: none; padding: 2px; }
+        .card-locate-btn { color: var(--primary-red); cursor: pointer; background: none; border: none; padding: 2px; border-radius: 4px; transition: box-shadow 0.2s; }
+        .card-locate-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
 
         .store-info-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; color: #666; font-size: 0.85rem; text-decoration: none; }
         .phone-link { color: var(--text-main); text-decoration: none; font-weight: 500; }
@@ -102,9 +105,11 @@
         .distance-tag { font-weight: bold; color: var(--primary-green); font-size: 0.85rem; margin: 10px 0; }
         
         .actions { display: flex; gap: 8px; margin-top: 12px; }
-        .btn { flex: 1; text-align: center; padding: 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.8rem; }
+        .btn { flex: 1; text-align: center; padding: 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.8rem; transition: box-shadow 0.2s; }
         .btn-order { background: var(--primary-red); color: white; }
+        .btn-order:hover { box-shadow: 0 4px 12px rgba(209,32,39,0.4); }
         .btn-directions { background: #e2e8f0; color: var(--text-main); }
+        .btn-directions:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 
         #map { flex: 1; height: 100%; background: #eee; }
 
